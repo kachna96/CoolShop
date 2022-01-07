@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<RuleSet Name="Roslyn Analysis Rules" ToolsVersion="16.0">
+
+  <!-- Custom overrides below -->
+
+  <Rules AnalyzerId="Microsoft.CodeAnalysis.NetAnalyzers" RuleNamespace="Microsoft.CodeAnalysis.NetAnalyzers">
+    <Rule Id="CA1014" Action="None" /> <!-- Mark assemblies with CLSCompliant -->
+  </Rules>
+
+</RuleSet>
