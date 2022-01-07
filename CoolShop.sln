@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32104.313
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoolShop", "CoolShop\CoolShop.csproj", "{33EE4248-D9DC-4418-AB05-FE3224A83129}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoolShop", "src\CoolShop\CoolShop.csproj", "{33EE4248-D9DC-4418-AB05-FE3224A83129}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{D62C0EAB-9174-42D6-979E-7BF5E6115E5D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{495D8327-20D6-48D7-B453-ACABAA101083}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,6 +22,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{33EE4248-D9DC-4418-AB05-FE3224A83129} = {D62C0EAB-9174-42D6-979E-7BF5E6115E5D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FA109E6F-975E-4D87-9AE1-EF51547D6F55}
