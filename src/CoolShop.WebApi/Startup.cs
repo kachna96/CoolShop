@@ -1,4 +1,5 @@
 ﻿using CoolShop.WebApi.Domain.Entities;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -31,6 +32,8 @@ public class Startup
         {
             c.SwaggerDoc("v1", new OpenApiInfo { Title = "CoolShop", Version = "v1" });
         });
+        services.AddAutoMapper(typeof(Startup));
+        services.AddMediatR(typeof(Startup));
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
