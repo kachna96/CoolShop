@@ -7,4 +7,8 @@
     <Rule Id="CA1014" Action="None" /> <!-- Mark assemblies with CLSCompliant -->
   </Rules>
 
+  <Rules AnalyzerId="Microsoft.CodeAnalysis.NetAnalyzers" RuleNamespace="Microsoft.CodeAnalysis.NetAnalyzers">
+    <Rule Id="CA2007" Action="None" /> <!-- Consider calling ConfigureAwait on the awaited task -->
+  </Rules>
+
 </RuleSet>
