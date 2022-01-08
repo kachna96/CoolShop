@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32104.313
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoolShop.WebApi", "src\CoolShop.WebApi\CoolShop.WebApi.csproj", "{33EE4248-D9DC-4418-AB05-FE3224A83129}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoolShop.WebApi", "src\CoolShop.WebApi\CoolShop.WebApi.csproj", "{33EE4248-D9DC-4418-AB05-FE3224A83129}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{D62C0EAB-9174-42D6-979E-7BF5E6115E5D}"
 EndProject
