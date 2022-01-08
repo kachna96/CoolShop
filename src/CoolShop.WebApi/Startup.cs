@@ -2,6 +2,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -28,6 +29,19 @@ public class Startup
         services.AddDatabaseDeveloperPageExceptionFilter();
 
         services.AddControllers();
+        services.AddApiVersioning(options =>
+        {
+            options.AssumeDefaultVersionWhenUnspecified = true;
+            options.DefaultApiVersion = ApiVersion.Default;
+            options.ReportApiVersions = true;
+        });
+
+        services.AddVersionedApiExplorer(options =>
+        {
+            options.GroupNameFormat = "'v'VVV";
+            options.SubstituteApiVersionInUrl = true;
+        });
+
         services.AddSwaggerGen(c =>
         {
             c.SwaggerDoc("v1", new OpenApiInfo { Title = "CoolShop", Version = "v1" });
