@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Ardalis.GuardClauses;
@@ -10,18 +11,20 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CoolShop.WebApi.Features.Queries.Products;
 
-public class GetProductCollection
+public class GetProductCollectionV2
 {
-    public record Query() : IRequest<ProductCollectionResponse>;
+    public record Query(int Page, int Take) : IRequest<ProductCollectionResponseV2>;
 
-    public class ProductCollectionResponse
+    public class ProductCollectionResponseV2
     {
-        public int Count { get; set; }
+        public int TotalCount { get; set; }
+
+        public int Page { get; set; }
 
         public IEnumerable<ProductResponse> ProductCollection { get; set; }
     }
 
-    public class Handler : IRequestHandler<Query, ProductCollectionResponse>
+    public class Handler : IRequestHandler<Query, ProductCollectionResponseV2>
     {
         private readonly CoolShopContext _context;
         private readonly IMapper _mapper;
@@ -32,15 +35,23 @@ public class GetProductCollection
             _mapper = mapper;
         }
 
-        public async Task<ProductCollectionResponse> Handle(Query request, CancellationToken cancellationToken)
+        public async Task<ProductCollectionResponseV2> Handle(Query request, CancellationToken cancellationToken)
         {
             Guard.Against.Null(request, nameof(request));
 
+            var count = await _context.Products.CountAsync(cancellationToken);
             var products = await _context
                 .Products
+                .Skip((request.Page - 1) * request.Take)
+                .Take(request.Take)
                 .ToListAsync(cancellationToken);
 
-            return _mapper.Map<ProductCollectionResponse>(products);
+            return new ProductCollectionResponseV2
+            {
+                Page = request.Page,
+                TotalCount = count,
+                ProductCollection = _mapper.Map<IEnumerable<ProductResponse>>(products)
+            };
         }
     }
 }
