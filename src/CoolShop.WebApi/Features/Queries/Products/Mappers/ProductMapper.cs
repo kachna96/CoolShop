@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using CoolShop.WebApi.Domain.Entities;
-using static CoolShop.WebApi.Features.Queries.Products.GetProductById;
+using CoolShop.WebApi.Features.Queries.Products.Responses;
 
 namespace CoolShop.WebApi.Features.Queries.Products.Mappers;
 

@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Ardalis.GuardClauses;
 using AutoMapper;
 using CoolShop.WebApi.Domain.Entities;
+using CoolShop.WebApi.Features.Queries.Products.Responses;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,16 +18,7 @@ public class GetProductCollection
     {
         public int Count { get; set; }
 
-        public IEnumerable<InnerProduct> ProductCollection { get; set; }
-    }
-
-    public class InnerProduct
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public Uri ImageUri { get; set; }
-        public decimal Price { get; set; }
-        public string Description { get; set; }
+        public IEnumerable<ProductResponse> ProductCollection { get; set; }
     }
 
     public class Handler : IRequestHandler<Query, ProductCollectionResponse>

@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Ardalis.GuardClauses;
 using AutoMapper;
 using CoolShop.WebApi.Domain.Entities;
+using CoolShop.WebApi.Features.Queries.Products.Responses;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -21,18 +21,7 @@ public class GetProductCollectionV2
 
         public int Page { get; set; }
 
-        public int PageCount { get; set; }
-
-        public IEnumerable<InnerProductV2> ProductCollection { get; set; }
-    }
-
-    public class InnerProductV2
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public Uri ImageUri { get; set; }
-        public decimal Price { get; set; }
-        public string Description { get; set; }
+        public IEnumerable<ProductResponse> ProductCollection { get; set; }
     }
 
     public class Handler : IRequestHandler<Query, ProductCollectionResponseV2>
@@ -60,9 +49,8 @@ public class GetProductCollectionV2
             return new ProductCollectionResponseV2
             {
                 Page = request.Page,
-                PageCount = request.Take,
                 TotalCount = count,
-                ProductCollection = _mapper.Map<IEnumerable<InnerProductV2>>(products)
+                ProductCollection = _mapper.Map<IEnumerable<ProductResponse>>(products)
             };
         }
     }

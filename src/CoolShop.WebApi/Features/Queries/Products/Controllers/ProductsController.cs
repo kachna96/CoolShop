@@ -1,9 +1,9 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
+using CoolShop.WebApi.Features.Queries.Products.Responses;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using static CoolShop.WebApi.Features.Queries.Products.GetProductById;
 using static CoolShop.WebApi.Features.Queries.Products.GetProductCollection;
 using static CoolShop.WebApi.Features.Queries.Products.GetProductCollectionV2;
 
@@ -12,6 +12,7 @@ namespace CoolShop.WebApi.Features.Queries.Products.Controllers;
 [ApiController]
 [ApiVersion("1.0")]
 [ApiVersion("2.0")]
+[Produces("application/json")]
 [Route("api/v{version:apiVersion}/[controller]")]
 public class ProductsController : Controller
 {

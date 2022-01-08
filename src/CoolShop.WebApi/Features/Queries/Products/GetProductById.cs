@@ -1,9 +1,9 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using Ardalis.GuardClauses;
 using AutoMapper;
 using CoolShop.WebApi.Domain.Entities;
+using CoolShop.WebApi.Features.Queries.Products.Responses;
 using MediatR;
 
 namespace CoolShop.WebApi.Features.Queries.Products;
@@ -11,15 +11,6 @@ namespace CoolShop.WebApi.Features.Queries.Products;
 public class GetProductById
 {
     public record Query(int Id) : IRequest<ProductResponse>;
-
-    public class ProductResponse
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public Uri ImageUri { get; set; }
-        public decimal Price { get; set; }
-        public string Description { get; set; }
-    }
 
     public class Handler : IRequestHandler<Query, ProductResponse>
     {
