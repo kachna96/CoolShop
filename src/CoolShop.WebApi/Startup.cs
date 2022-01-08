@@ -1,4 +1,5 @@
 ﻿using CoolShop.WebApi.Domain.Entities;
+using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -48,6 +49,7 @@ public class Startup
 
         services.AddAutoMapper(typeof(Startup));
         services.AddMediatR(typeof(Startup));
+        services.AddValidatorsFromAssemblyContaining(typeof(Startup));
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
