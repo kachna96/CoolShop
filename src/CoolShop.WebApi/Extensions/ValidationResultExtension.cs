@@ -4,13 +4,13 @@ using FluentValidation.Results;
 
 namespace CoolShop.WebApi.Extensions;
 
-public static class ValidationResultsExtension
+public static class ValidationResultExtension
 {
     public static Dictionary<string, string[]> GetValidationErrors(this ValidationResult validationResult)
     {
         if (validationResult is null)
         {
-            return new Dictionary<string, string[]>();
+            return new();
         }
 
         return validationResult
