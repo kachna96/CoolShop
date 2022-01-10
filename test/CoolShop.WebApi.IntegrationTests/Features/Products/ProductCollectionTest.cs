@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
-using CoolShop.WebApi.Features.Queries.Products;
+using CoolShop.WebApi.Features.Products.Queries;
 using CoolShop.WebApi.IntegrationTests.Base;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -15,7 +15,7 @@ public class ProductCollectionTest : CustomWebApplicationFactory<Startup>
     {
         var client = CreateCoolShopClient();
 
-        var response = await client.GetFromJsonAsync<GetProductCollection.ProductCollectionResponse>("/api/v1/products");
+        var response = await client.GetFromJsonAsync<GetProductCollectionV1.ProductCollectionResponseV1>("/api/v1/products");
 
         Assert.IsNotNull(response);
         Assert.AreEqual(0, response.Count);
@@ -28,7 +28,7 @@ public class ProductCollectionTest : CustomWebApplicationFactory<Startup>
         await SeedDatabase();
         var client = CreateCoolShopClient();
 
-        var response = await client.GetFromJsonAsync<GetProductCollection.ProductCollectionResponse>("/api/v1/products");
+        var response = await client.GetFromJsonAsync<GetProductCollectionV1.ProductCollectionResponseV1>("/api/v1/products");
 
         Assert.IsNotNull(response);
         Assert.AreEqual(20, response.Count);
