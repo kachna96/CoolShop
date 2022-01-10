@@ -55,6 +55,9 @@ public sealed class GetProductCollectionV1
         /// <param name="mapper">Mapper</param>
         public Handler(CoolShopContext context, IMapper mapper)
         {
+            Guard.Against.Null(context, nameof(context));
+            Guard.Against.Null(mapper, nameof(mapper));
+
             _context = context;
             _mapper = mapper;
         }

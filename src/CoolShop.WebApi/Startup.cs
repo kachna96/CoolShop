@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Reflection;
+using Ardalis.GuardClauses;
 using CoolShop.WebApi.Behaviors;
 using CoolShop.WebApi.Domain.Entities;
 using FluentValidation;
@@ -28,6 +29,8 @@ public class Startup
     /// <param name="configuration">Configuration</param>
     public Startup(IConfiguration configuration)
     {
+        Guard.Against.Null(configuration, nameof(configuration));
+
         Configuration = configuration;
     }
 
