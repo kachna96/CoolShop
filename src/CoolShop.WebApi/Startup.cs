@@ -1,4 +1,7 @@
-﻿using CoolShop.WebApi.Behaviors;
+﻿using System;
+using System.IO;
+using System.Reflection;
+using CoolShop.WebApi.Behaviors;
 using CoolShop.WebApi.Domain.Entities;
 using FluentValidation;
 using MediatR;
@@ -14,16 +17,29 @@ using Microsoft.OpenApi.Models;
 
 namespace CoolShop.WebApi;
 
+/// <summary>
+/// Startup
+/// </summary>
 public class Startup
 {
+    /// <summary>
+    /// Constructor
+    /// </summary>
+    /// <param name="configuration">Configuration</param>
     public Startup(IConfiguration configuration)
     {
         Configuration = configuration;
     }
 
+    /// <summary>
+    /// Loaded configuration
+    /// </summary>
     public IConfiguration Configuration { get; }
 
-    // This method gets called by the runtime. Use this method to add services to the container.
+    /// <summary>
+    /// Configure available services to DI
+    /// </summary>
+    /// <param name="services"></param>
     public void ConfigureServices(IServiceCollection services)
     {
         services.AddHttpsRedirection(options =>
@@ -53,6 +69,7 @@ public class Startup
         {
             c.SwaggerDoc("v1", new OpenApiInfo { Title = "CoolShop v1", Version = "v1" });
             c.SwaggerDoc("v2", new OpenApiInfo { Title = "CoolShop v2", Version = "v2" });
+            c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, $"{Assembly.GetExecutingAssembly().GetName().Name}.xml"));
         });
 
         services.AddAutoMapper(typeof(Startup));
@@ -61,7 +78,12 @@ public class Startup
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(TransactionBehavior<,>));
     }
 
-    // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+    /// <summary>
+    /// Configure request pipeline
+    /// </summary>
+    /// <param name="app">Application builder</param>
+    /// <param name="env">Host environment</param>
+    /// <param name="provider">Api version provider</param>
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IApiVersionDescriptionProvider provider)
     {
         if (env.IsDevelopment())

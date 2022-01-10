@@ -10,6 +10,9 @@ using MediatR;
 
 namespace CoolShop.WebApi.Features.Products.Queries;
 
+/// <summary>
+/// GetProductById operations
+/// </summary>
 public sealed class GetProductById
 {
     /// <summary>
@@ -23,6 +26,10 @@ public sealed class GetProductById
         /// </summary>
         public int Id { get; set; }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="id">Product ID</param>
         public Query(int id)
         {
             Id = id;
@@ -72,6 +79,11 @@ public sealed class GetProductById
         private readonly CoolShopContext _context;
         private readonly IMapper _mapper;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="context">DbContext</param>
+        /// <param name="mapper">Mapper</param>
         public Handler(CoolShopContext context, IMapper mapper)
         {
             _context = context;

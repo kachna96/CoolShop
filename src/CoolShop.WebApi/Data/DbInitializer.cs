@@ -6,8 +6,16 @@ using CoolShop.WebApi.Domain.Entities;
 
 namespace CoolShop.WebApi.Data;
 
+/// <summary>
+/// Db static data related methods
+/// </summary>
 public static class DbInitializer
 {
+    /// <summary>
+    /// Create random data and insert them into database
+    /// </summary>
+    /// <param name="context">DbContext to use</param>
+    /// <returns></returns>
     public static async Task InitializeAsync(CoolShopContext context)
     {
         Guard.Against.Null(context, nameof(context));
