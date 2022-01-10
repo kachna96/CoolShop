@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
-using CoolShop.WebApi.Features.Queries.Products;
+using CoolShop.WebApi.Features.Products.Queries;
 using CoolShop.WebApi.IntegrationTests.Base;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 

@@ -4,19 +4,56 @@ using Ardalis.GuardClauses;
 using AutoMapper;
 using CoolShop.WebApi.Domain.Entities;
 using CoolShop.WebApi.Extensions;
-using CoolShop.WebApi.Features.Queries.Products.Responses;
+using CoolShop.WebApi.Features.Products.Queries;
 using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 
-namespace CoolShop.WebApi.Features.Commands.Commands;
+namespace CoolShop.WebApi.Features.Products.Commands;
 
-public class PutProductById
+public sealed class PutProductById
 {
-    public record RequestCommand(string Description);
+    /// <summary>
+    /// Request object
+    /// </summary>
+    public record RequestCommand
+    {
+        /// <summary>
+        /// New product description
+        /// </summary>
+        public string Description { get; set; }
 
-    public record Command(int Id, string Description) : IRequest<IResult>;
+        public RequestCommand(string description)
+        {
+            Description = description;
+        }
+    }
 
+    /// <summary>
+    /// Request object with Id
+    /// </summary>
+    public record Command : IRequest<IResult>
+    {
+        /// <summary>
+        /// Product id
+        /// </summary>
+        public int Id { get; set; }
+
+        /// <summary>
+        /// New product description
+        /// </summary>
+        public string Description { get; set; }
+
+        public Command(int id, string description)
+        {
+            Id = id;
+            Description = description;
+        }
+    }
+
+    /// <summary>
+    /// Handler
+    /// </summary>
     public class Handler : IRequestHandler<Command, IResult>
     {
         private readonly CoolShopContext _context;
@@ -30,6 +67,7 @@ public class PutProductById
             _validator = validator;
         }
 
+        /// <inheritdoc/>
         public async Task<IResult> Handle(Command request, CancellationToken cancellationToken)
         {
             Guard.Against.Null(request, nameof(request));
@@ -56,10 +94,13 @@ public class PutProductById
 
             await _context.SaveChangesAsync(cancellationToken);
 
-            return Results.Ok(_mapper.Map<ProductResponse>(product));
+            return Results.Ok(_mapper.Map<GetProductById.Response>(product));
         }
     }
 
+    /// <summary>
+    /// Request validator
+    /// </summary>
     public class PutProductByIdValidator : AbstractValidator<Command>
     {
         public PutProductByIdValidator()
