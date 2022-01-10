@@ -11,6 +11,9 @@ using Microsoft.AspNetCore.Http;
 
 namespace CoolShop.WebApi.Features.Products.Commands;
 
+/// <summary>
+/// PutProduct operations
+/// </summary>
 public sealed class PutProductById
 {
     /// <summary>
@@ -23,6 +26,10 @@ public sealed class PutProductById
         /// </summary>
         public string Description { get; set; }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="description">New product description</param>
         public RequestCommand(string description)
         {
             Description = description;
@@ -44,6 +51,11 @@ public sealed class PutProductById
         /// </summary>
         public string Description { get; set; }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="id">Product id</param>
+        /// <param name="description">New product description</param>
         public Command(int id, string description)
         {
             Id = id;
@@ -60,6 +72,12 @@ public sealed class PutProductById
         private readonly IMapper _mapper;
         private readonly IValidator<Command> _validator;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="context">DbContext</param>
+        /// <param name="mapper">Mapper</param>
+        /// <param name="validator">Request validator</param>
         public Handler(CoolShopContext context, IMapper mapper, IValidator<Command> validator)
         {
             _context = context;
@@ -103,6 +121,9 @@ public sealed class PutProductById
     /// </summary>
     public class PutProductByIdValidator : AbstractValidator<Command>
     {
+        /// <summary>
+        /// Product validator rules
+        /// </summary>
         public PutProductByIdValidator()
         {
             RuleFor(r => r.Id).NotEmpty();

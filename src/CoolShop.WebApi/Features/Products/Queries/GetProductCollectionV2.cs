@@ -12,6 +12,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CoolShop.WebApi.Features.Products.Queries;
 
+/// <summary>
+/// GetProductCollectionV2 operations
+/// </summary>
 public sealed class GetProductCollectionV2
 {
     /// <summary>
@@ -30,6 +33,11 @@ public sealed class GetProductCollectionV2
         /// </summary>
         public int Take { get; set; }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="page">Page to query</param>
+        /// <param name="take">Number of items on page</param>
         public Query(int page, int take)
         {
             Page = page;
@@ -69,6 +77,11 @@ public sealed class GetProductCollectionV2
         private readonly CoolShopContext _context;
         private readonly IMapper _mapper;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="context">DbContext</param>
+        /// <param name="mapper">Mapper</param>
         public Handler(CoolShopContext context, IMapper mapper)
         {
             _context = context;

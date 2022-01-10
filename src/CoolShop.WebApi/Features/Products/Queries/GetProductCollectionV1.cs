@@ -11,6 +11,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CoolShop.WebApi.Features.Products.Queries;
 
+/// <summary>
+/// GetProductCollectionV1 operations
+/// </summary>
 public sealed class GetProductCollectionV1
 {
     /// <summary>
@@ -45,6 +48,11 @@ public sealed class GetProductCollectionV1
         private readonly CoolShopContext _context;
         private readonly IMapper _mapper;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="context">DbContext</param>
+        /// <param name="mapper">Mapper</param>
         public Handler(CoolShopContext context, IMapper mapper)
         {
             _context = context;

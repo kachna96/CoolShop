@@ -6,9 +6,15 @@ using static CoolShop.WebApi.Features.Products.Queries.GetProductCollectionV1;
 
 namespace CoolShop.WebApi.Features.Products.Mappers;
 
-public class ProductCollectionMapper : Profile
+/// <summary>
+/// Mapper for ProductCollectionV1
+/// </summary>
+public class ProductCollectionV1Mapper : Profile
 {
-    public ProductCollectionMapper()
+    /// <summary>
+    /// Create map
+    /// </summary>
+    public ProductCollectionV1Mapper()
     {
         CreateMap<IEnumerable<Product>, ProductCollectionResponseV1>()
             .ForMember(x => x.Count, x => x.MapFrom(source => source.Count()))

@@ -10,6 +10,9 @@ using static CoolShop.WebApi.Features.Products.Queries.GetProductCollectionV2;
 
 namespace CoolShop.WebApi.Features.Products.Controllers;
 
+/// <summary>
+/// Controller for products related actions
+/// </summary>
 [ApiController]
 [ApiVersion("1.0")]
 [ApiVersion("2.0")]
@@ -19,6 +22,10 @@ public class ProductsController : Controller
 {
     private readonly IMediator _mediator;
 
+    /// <summary>
+    /// Constructor
+    /// </summary>
+    /// <param name="mediator"></param>
     public ProductsController(IMediator mediator)
     {
         _mediator = mediator;
@@ -44,7 +51,7 @@ public class ProductsController : Controller
     }
 
     /// <summary>
-    /// Gets a single Product by its ID
+    /// Get single Product by its ID
     /// </summary>
     /// <param name="id">Product ID</param>
     /// <param name="cancellationToken">Cancellation Token</param>
@@ -61,7 +68,7 @@ public class ProductsController : Controller
     }
 
     /// <summary>
-    /// Gets a Product collection
+    /// Get Product collection
     /// </summary>
     /// <param name="cancellationToken">Cancellation Token</param>
     /// <returns></returns>
@@ -76,7 +83,7 @@ public class ProductsController : Controller
     }
 
     /// <summary>
-    /// Gets a paged Product collection
+    /// Get paged Product collection
     /// </summary>
     /// <param name="page">Page to fetch</param>
     /// <param name="take">Number of items per page</param>

@@ -9,8 +9,16 @@ using Microsoft.Extensions.Logging;
 
 namespace CoolShop.WebApi;
 
+/// <summary>
+/// Program entry
+/// </summary>
 public sealed class Program
 {
+    /// <summary>
+    /// Main
+    /// </summary>
+    /// <param name="args"></param>
+    /// <returns></returns>
     public static async Task Main(string[] args)
     {
         var host = CreateHostBuilder(args).Build();
@@ -20,6 +28,11 @@ public sealed class Program
         await host.RunAsync();
     }
 
+    /// <summary>
+    /// Create host builder
+    /// </summary>
+    /// <param name="args"></param>
+    /// <returns></returns>
     public static IHostBuilder CreateHostBuilder(string[] args) =>
         Host.CreateDefaultBuilder(args)
             .ConfigureWebHostDefaults(webBuilder =>
