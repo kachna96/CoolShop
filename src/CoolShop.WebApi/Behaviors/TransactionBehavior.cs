@@ -21,6 +21,9 @@ public class TransactionBehavior<TRequest, TResponse> : IPipelineBehavior<TReque
     /// <param name="logger">Logger</param>
     public TransactionBehavior(CoolShopContext context, ILogger<TransactionBehavior<TRequest, TResponse>> logger)
     {
+        Guard.Against.Null(context, nameof(context));
+        Guard.Against.Null(logger, nameof(logger));
+
         _context = context;
         _logger = logger;
     }

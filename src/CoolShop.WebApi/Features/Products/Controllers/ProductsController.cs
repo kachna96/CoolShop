@@ -1,5 +1,6 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
+using Ardalis.GuardClauses;
 using CoolShop.WebApi.Features.Products.Commands;
 using CoolShop.WebApi.Features.Products.Queries;
 using MediatR;
@@ -28,6 +29,8 @@ public class ProductsController : Controller
     /// <param name="mediator"></param>
     public ProductsController(IMediator mediator)
     {
+        Guard.Against.Null(mediator, nameof(mediator));
+
         _mediator = mediator;
     }
 

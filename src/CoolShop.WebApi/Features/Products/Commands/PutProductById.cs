@@ -80,6 +80,10 @@ public sealed class PutProductById
         /// <param name="validator">Request validator</param>
         public Handler(CoolShopContext context, IMapper mapper, IValidator<Command> validator)
         {
+            Guard.Against.Null(context, nameof(context));
+            Guard.Against.Null(mapper, nameof(mapper));
+            Guard.Against.Null(validator, nameof(validator));
+
             _context = context;
             _mapper = mapper;
             _validator = validator;
