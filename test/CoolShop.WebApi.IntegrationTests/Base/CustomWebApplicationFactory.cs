@@ -8,6 +8,7 @@ using CoolShop.WebApi.Domain.Entities;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -49,6 +50,8 @@ public class CustomWebApplicationFactory<TStartup> : WebApplicationFactory<TStar
             services.AddDbContext<CoolShopContext>(options =>
             {
                 options.UseInMemoryDatabase(nameof(CoolShopContext));
+                // don't raise the error warning us that the in memory db doesn't support transactions
+                options.ConfigureWarnings(x => x.Ignore(InMemoryEventId.TransactionIgnoredWarning));
             });
         });
     }
