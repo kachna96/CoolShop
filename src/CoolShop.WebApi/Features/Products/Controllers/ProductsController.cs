@@ -32,6 +32,7 @@ public class ProductsController : Controller
     /// <param name="cancellationToken">Cancellation Token</param>
     /// <returns></returns>
     [HttpPut("{id}")]
+    [MapToApiVersion("1.0")]
     [ProducesResponseType(typeof(GetProductById.Response), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(HttpValidationProblemDetails), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(HttpValidationProblemDetails), StatusCodes.Status404NotFound)]
