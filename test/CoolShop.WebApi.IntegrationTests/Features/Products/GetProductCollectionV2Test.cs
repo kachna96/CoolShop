@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
 using CoolShop.WebApi.Features.Products.Queries;
@@ -8,7 +9,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace CoolShop.WebApi.IntegrationTests.Features.Products;
 
 [TestClass]
-public class ProductCollectionV2Test : CustomWebApplicationFactory<Startup>
+public class GetProductCollectionV2Test : CustomWebApplicationFactory<Startup>
 {
     [TestMethod]
     public async Task GetProductCollectionV2Test_WithEmptyDatabase()
@@ -50,5 +51,25 @@ public class ProductCollectionV2Test : CustomWebApplicationFactory<Startup>
         Assert.AreEqual(3, response.Page);
         Assert.AreEqual(5, response.ProductCollection.Count());
         Assert.AreEqual(Products.Skip(10).First().Name, response.ProductCollection.First().Name);
+    }
+
+    [TestMethod]
+    public async Task GetProductCollectionV2Test_WithNegativePage_ProducesError()
+    {
+        await SeedDatabase();
+        var client = CreateCoolShopClient();
+
+        var ex = await Assert.ThrowsExceptionAsync<HttpRequestException>(async () => await client.GetFromJsonAsync<GetProductCollectionV2.ProductCollectionResponseV2>("/api/v2/products?page=-1&take=5"));
+        Assert.AreEqual(ex.Message, "Response status code does not indicate success: 400 (Bad Request).");
+    }
+
+    [TestMethod]
+    public async Task GetProductCollectionV2Test_WithNegativeTake_ProducesError()
+    {
+        await SeedDatabase();
+        var client = CreateCoolShopClient();
+
+        var ex = await Assert.ThrowsExceptionAsync<HttpRequestException>(async () => await client.GetFromJsonAsync<GetProductCollectionV2.ProductCollectionResponseV2>("/api/v2/products?page=1&take=-5"));
+        Assert.AreEqual(ex.Message, "Response status code does not indicate success: 400 (Bad Request).");
     }
 }

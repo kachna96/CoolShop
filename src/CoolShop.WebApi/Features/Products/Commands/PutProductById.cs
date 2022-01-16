@@ -130,7 +130,8 @@ public sealed class PutProductById
         /// </summary>
         public PutProductByIdValidator()
         {
-            RuleFor(r => r.Id).NotEmpty();
+            RuleFor(r => r.Id)
+                .GreaterThanOrEqualTo(0);
             RuleFor(r => r.Description)
                 .NotEmpty()
                 .MinimumLength(10)

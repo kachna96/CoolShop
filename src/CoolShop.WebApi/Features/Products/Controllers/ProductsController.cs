@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Ardalis.GuardClauses;
 using CoolShop.WebApi.Features.Products.Commands;
 using CoolShop.WebApi.Features.Products.Queries;
+using FluentValidation.Results;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -35,7 +36,7 @@ public class ProductsController : Controller
     }
 
     /// <summary>
-    /// Update single product description
+    /// Update single Product description
     /// </summary>
     /// <param name="id">Id of a product to update</param>
     /// <param name="requestCommand">New product values</param>
@@ -44,9 +45,9 @@ public class ProductsController : Controller
     [HttpPut("{id}")]
     [MapToApiVersion("1.0")]
     [ProducesResponseType(typeof(GetProductById.Response), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(HttpValidationProblemDetails), StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(typeof(HttpValidationProblemDetails), StatusCodes.Status404NotFound)]
-    public async Task PutProductById([FromRoute] int id, [FromBody] PutProductById.RequestCommand requestCommand, CancellationToken cancellationToken)
+    [ProducesResponseType(typeof(ValidationResult), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task PutProductByIdAsync([FromRoute] int id, [FromBody] PutProductById.RequestCommand requestCommand, CancellationToken cancellationToken)
     {
         var command = new PutProductById.Command(id, requestCommand?.Description);
         var result = await _mediator.Send(command, cancellationToken);
@@ -62,12 +63,13 @@ public class ProductsController : Controller
     [HttpGet("{id}")]
     [MapToApiVersion("1.0")]
     [ProducesResponseType(typeof(GetProductById.Response), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ValidationResult), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetByProductIdAsync([FromRoute] int id, CancellationToken cancellationToken)
+    public async Task GetByProductIdAsync([FromRoute] int id, CancellationToken cancellationToken)
     {
         var query = new GetProductById.Query(id);
         var result = await _mediator.Send(query, cancellationToken);
-        return result is not null ? Ok(result) : NotFound();
+        await result.ExecuteAsync(HttpContext);
     }
 
     /// <summary>
@@ -95,10 +97,12 @@ public class ProductsController : Controller
     [HttpGet("")]
     [MapToApiVersion("2.0")]
     [ProducesResponseType(typeof(ProductCollectionResponseV2), StatusCodes.Status200OK)]
-    public async Task<IActionResult> GetProductCollectionV2Async(CancellationToken cancellationToken, [FromQuery] int page = 1, [FromQuery] int take = 10)
+    [ProducesResponseType(typeof(ValidationResult), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task GetProductCollectionV2Async(CancellationToken cancellationToken, [FromQuery] int page = 1, [FromQuery] int take = 10)
     {
         var query = new GetProductCollectionV2.Query(page, take);
         var result = await _mediator.Send(query, cancellationToken);
-        return Ok(result);
+        await result.ExecuteAsync(HttpContext);
     }
 }

@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 using Ardalis.GuardClauses;
 using AutoMapper;
 using CoolShop.WebApi.Domain.Entities;
+using FluentValidation;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 
 namespace CoolShop.WebApi.Features.Products.Queries;
 
@@ -19,7 +21,7 @@ public sealed class GetProductById
     /// Request object
     /// </summary>
     [SuppressMessage("Naming", "CA1724: Type names should not match namespaces", Justification = "Generic query object")]
-    public record Query : IRequest<Response>
+    public record Query : IRequest<IResult>
     {
         /// <summary>
         /// Id of a product
@@ -74,7 +76,7 @@ public sealed class GetProductById
     /// <summary>
     /// Handler
     /// </summary>
-    public class Handler : IRequestHandler<Query, Response>
+    public class Handler : IRequestHandler<Query, IResult>
     {
         private readonly CoolShopContext _context;
         private readonly IMapper _mapper;
@@ -94,7 +96,7 @@ public sealed class GetProductById
         }
 
         /// <inheritdoc/>
-        public async Task<Response> Handle(Query request, CancellationToken cancellationToken)
+        public async Task<IResult> Handle(Query request, CancellationToken cancellationToken)
         {
             Guard.Against.Null(request, nameof(request));
 
@@ -102,7 +104,27 @@ public sealed class GetProductById
                 .Products
                 .FindAsync(new object[] { request.Id }, cancellationToken: cancellationToken);
 
-            return _mapper.Map<Response>(product);
+            if (product is null)
+            {
+                return Results.NotFound();
+            }
+
+            return Results.Ok(_mapper.Map<Response>(product));
+        }
+    }
+
+    /// <summary>
+    /// Request validator
+    /// </summary>
+    public class GetProductByIdValidator : AbstractValidator<Query>
+    {
+        /// <summary>
+        /// Product validator rules
+        /// </summary>
+        public GetProductByIdValidator()
+        {
+            RuleFor(x => x.Id)
+                .GreaterThanOrEqualTo(0);
         }
     }
 }

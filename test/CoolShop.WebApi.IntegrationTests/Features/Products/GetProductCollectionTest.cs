@@ -8,7 +8,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace CoolShop.WebApi.IntegrationTests.Features.Products;
 
 [TestClass]
-public class ProductCollectionTest : CustomWebApplicationFactory<Startup>
+public class GetProductCollectionTest : CustomWebApplicationFactory<Startup>
 {
     [TestMethod]
     public async Task GetProductCollectionTest_WithEmptyDatabase()

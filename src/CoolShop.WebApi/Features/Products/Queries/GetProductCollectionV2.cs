@@ -7,7 +7,9 @@ using System.Threading.Tasks;
 using Ardalis.GuardClauses;
 using AutoMapper;
 using CoolShop.WebApi.Domain.Entities;
+using FluentValidation;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 
 namespace CoolShop.WebApi.Features.Products.Queries;
@@ -21,7 +23,7 @@ public sealed class GetProductCollectionV2
     /// Request object
     /// </summary>
     [SuppressMessage("Naming", "CA1724: Type names should not match namespaces", Justification = "Generic query object")]
-    public record Query : IRequest<ProductCollectionResponseV2>
+    public record Query : IRequest<IResult>
     {
         /// <summary>
         /// Id of a product
@@ -72,7 +74,7 @@ public sealed class GetProductCollectionV2
     /// <summary>
     /// Handler
     /// </summary>
-    public class Handler : IRequestHandler<Query, ProductCollectionResponseV2>
+    public class Handler : IRequestHandler<Query, IResult>
     {
         private readonly CoolShopContext _context;
         private readonly IMapper _mapper;
@@ -92,7 +94,7 @@ public sealed class GetProductCollectionV2
         }
 
         /// <inheritdoc/>
-        public async Task<ProductCollectionResponseV2> Handle(Query request, CancellationToken cancellationToken)
+        public async Task<IResult> Handle(Query request, CancellationToken cancellationToken)
         {
             Guard.Against.Null(request, nameof(request));
 
@@ -103,12 +105,29 @@ public sealed class GetProductCollectionV2
                 .Take(request.Take)
                 .ToListAsync(cancellationToken);
 
-            return new ProductCollectionResponseV2
+            return Results.Ok(new ProductCollectionResponseV2
             {
                 Page = request.Page,
                 TotalCount = count,
                 ProductCollection = _mapper.Map<IEnumerable<GetProductById.Response>>(products)
-            };
+            });
+        }
+    }
+
+    /// <summary>
+    /// Request validator
+    /// </summary>
+    public class GetProductCollectionV2Validator : AbstractValidator<Query>
+    {
+        /// <summary>
+        /// Product validator rules
+        /// </summary>
+        public GetProductCollectionV2Validator()
+        {
+            RuleFor(x => x.Take)
+                .GreaterThanOrEqualTo(0);
+            RuleFor(x => x.Page)
+                .GreaterThan(0);
         }
     }
 }
