@@ -78,6 +78,7 @@ public class Startup
         services.AddAutoMapper(typeof(Startup));
         services.AddMediatR(typeof(Startup));
         services.AddValidatorsFromAssemblyContaining(typeof(Startup));
+        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(TransactionBehavior<,>));
     }
 
