@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using Ardalis.GuardClauses;
 using AutoMapper;
 using CoolShop.WebApi.Domain.Entities;
-using CoolShop.WebApi.Extensions;
 using CoolShop.WebApi.Features.Products.Queries;
 using FluentValidation;
 using MediatR;
@@ -70,36 +69,25 @@ public sealed class PutProductById
     {
         private readonly CoolShopContext _context;
         private readonly IMapper _mapper;
-        private readonly IValidator<Command> _validator;
 
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="context">DbContext</param>
         /// <param name="mapper">Mapper</param>
-        /// <param name="validator">Request validator</param>
-        public Handler(CoolShopContext context, IMapper mapper, IValidator<Command> validator)
+        public Handler(CoolShopContext context, IMapper mapper)
         {
             Guard.Against.Null(context, nameof(context));
             Guard.Against.Null(mapper, nameof(mapper));
-            Guard.Against.Null(validator, nameof(validator));
 
             _context = context;
             _mapper = mapper;
-            _validator = validator;
         }
 
         /// <inheritdoc/>
         public async Task<IResult> Handle(Command request, CancellationToken cancellationToken)
         {
             Guard.Against.Null(request, nameof(request));
-
-            var validationResult = _validator.Validate(request);
-
-            if (!validationResult.IsValid)
-            {
-                return Results.ValidationProblem(validationResult.GetValidationErrors());
-            }
 
             var product = await _context
                 .Products
