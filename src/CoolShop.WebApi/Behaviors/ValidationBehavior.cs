@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Ardalis.GuardClauses;
+using CoolShop.WebApi.Extensions;
 using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -43,6 +44,6 @@ public class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TReques
             return await next();
         }
 
-        return (TResponse)Results.BadRequest(failure);
+        return (TResponse)Results.ValidationProblem(failure.GetValidationErrors());
     }
 }
