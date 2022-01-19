@@ -47,7 +47,7 @@ public class ProductsController : Controller
     [ProducesResponseType(typeof(GetProductById.Response), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ValidationResult), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task PutProductByIdAsync([FromRoute] int id, [FromBody] PatchProductById.RequestCommand requestCommand, CancellationToken cancellationToken)
+    public async Task PatchProductByIdAsync([FromRoute] int id, [FromBody] PatchProductById.RequestCommand requestCommand, CancellationToken cancellationToken)
     {
         var command = new PatchProductById.Command(id, requestCommand?.Description);
         var result = await _mediator.Send(command, cancellationToken);

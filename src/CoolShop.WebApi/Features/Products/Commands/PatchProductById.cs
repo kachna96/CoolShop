@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Http;
 namespace CoolShop.WebApi.Features.Products.Commands;
 
 /// <summary>
-/// PutProduct operations
+/// PatchProduct operations
 /// </summary>
 public sealed class PatchProductById
 {
