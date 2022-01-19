@@ -42,14 +42,14 @@ public class ProductsController : Controller
     /// <param name="requestCommand">New product values</param>
     /// <param name="cancellationToken">Cancellation Token</param>
     /// <returns></returns>
-    [HttpPut("{id}")]
+    [HttpPatch("{id}")]
     [MapToApiVersion("1.0")]
     [ProducesResponseType(typeof(GetProductById.Response), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ValidationResult), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task PutProductByIdAsync([FromRoute] int id, [FromBody] PutProductById.RequestCommand requestCommand, CancellationToken cancellationToken)
+    public async Task PutProductByIdAsync([FromRoute] int id, [FromBody] PatchProductById.RequestCommand requestCommand, CancellationToken cancellationToken)
     {
-        var command = new PutProductById.Command(id, requestCommand?.Description);
+        var command = new PatchProductById.Command(id, requestCommand?.Description);
         var result = await _mediator.Send(command, cancellationToken);
         await result.ExecuteAsync(HttpContext);
     }
