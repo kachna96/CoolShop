@@ -4,6 +4,7 @@ using System.Reflection;
 using Ardalis.GuardClauses;
 using CoolShop.WebApi.Behaviors;
 using CoolShop.WebApi.Domain.Entities;
+using CoolShop.WebApi.Extensions;
 using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
@@ -101,6 +102,11 @@ public class Startup
                     options.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json", description.GroupName.ToUpperInvariant());
                 }
             });
+        }
+
+        if (!env.IsDevelopment())
+        {
+            app.UseApplicationHandlingMiddleware();
         }
 
         app.UseHttpsRedirection();
