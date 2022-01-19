@@ -47,6 +47,7 @@ public class ProductsController : Controller
     [ProducesResponseType(typeof(GetProductById.Response), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ValidationResult), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task PatchProductByIdAsync([FromRoute] int id, [FromBody] PatchProductById.RequestCommand requestCommand, CancellationToken cancellationToken)
     {
         var command = new PatchProductById.Command(id, requestCommand?.Description);
@@ -65,6 +66,7 @@ public class ProductsController : Controller
     [ProducesResponseType(typeof(GetProductById.Response), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ValidationResult), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task GetByProductIdAsync([FromRoute] int id, CancellationToken cancellationToken)
     {
         var query = new GetProductById.Query(id);
@@ -80,6 +82,7 @@ public class ProductsController : Controller
     [HttpGet("")]
     [MapToApiVersion("1.0")]
     [ProducesResponseType(typeof(ProductCollectionResponseV1), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> GetProductCollectionAsync(CancellationToken cancellationToken)
     {
         var query = new GetProductCollectionV1.Query();
@@ -99,6 +102,7 @@ public class ProductsController : Controller
     [ProducesResponseType(typeof(ProductCollectionResponseV2), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ValidationResult), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task GetProductCollectionV2Async(CancellationToken cancellationToken, [FromQuery] int page = 1, [FromQuery] int take = 10)
     {
         var query = new GetProductCollectionV2.Query(page, take);
