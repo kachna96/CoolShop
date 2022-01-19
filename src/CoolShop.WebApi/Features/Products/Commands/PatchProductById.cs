@@ -11,9 +11,9 @@ using Microsoft.AspNetCore.Http;
 namespace CoolShop.WebApi.Features.Products.Commands;
 
 /// <summary>
-/// PutProduct operations
+/// PatchProduct operations
 /// </summary>
-public sealed class PutProductById
+public sealed class PatchProductById
 {
     /// <summary>
     /// Request object
@@ -111,12 +111,12 @@ public sealed class PutProductById
     /// <summary>
     /// Request validator
     /// </summary>
-    public class PutProductByIdValidator : AbstractValidator<Command>
+    public class PatchProductByIdValidator : AbstractValidator<Command>
     {
         /// <summary>
         /// Product validator rules
         /// </summary>
-        public PutProductByIdValidator()
+        public PatchProductByIdValidator()
         {
             RuleFor(r => r.Id)
                 .GreaterThanOrEqualTo(0);
